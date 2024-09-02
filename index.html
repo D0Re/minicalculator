@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="main.js"></script>
+    <title>Calculator</title>
+</head>
+<body>
+    <div class="calculator">
+        <div class="calculator__container">
+            <div class="calculator__count">
+            <label class="count-title label" for="count">Кол-во товара</label>
+            <input  class="count-input input" type="number" id="count" name="count" placeholder="Кол-во товара">
+        </div>
+        
+            <div class="calculator__price">
+            <label class="price__title label" for="price">Закупочная цена товара</label>
+            <input  class="price__input  input" type="number" id="price" name="price" placeholder="Цена товара">
+        </div>
+        <div class="calculator__endprice">
+            <label class="endprice__title label" for="endprice"> Цена продажи</label>
+            <input  class="endprice__input  input" type="number"  id="endprice" name="endprice" placeholder="Цена продажи">
+        </div>
+
+        <div class="calculator__btn">
+            <button class="btn">Расчитать</button>
+        </div>
+        <p>Вся сумма: <span id="result"></span></p>
+        <p>Чистая выгода: <span id="endresult"></span></p>
+        </div>
+    </div>
+    <script>
+        // Ждем полной загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция расчета
+            function calculateResult() {
+                let count = document.querySelector('.count-input');
+                let startPrice = document.querySelector('.price__input');
+                let endPrice = document.querySelector('.endprice__input');
+
+                // Преобразуем значения к числу
+                let countNumber = parseFloat(count.value);
+                let startPriceNumber = parseFloat(startPrice.value);
+                let endPriceNumber = parseFloat(endPrice.value);
+
+                // Проверяем, что все значения корректные (не NaN)
+                if (isNaN(countNumber) || isNaN(startPriceNumber) || isNaN(endPriceNumber)) {
+                    alert("Введите корректные числа!");
+                    return;
+                }
+
+                // Формула расчета
+                let result = (countNumber * startPriceNumber) * (endPriceNumber / startPriceNumber);
+                 let endResult = result - (countNumber * startPriceNumber)
+                // Выводим результат
+                document.getElementById("result").textContent = result.toFixed(2);
+                document.getElementById("endresult").textContent = endResult.toFixed(2);
+            }
+
+            // Добавляем обработчик события на кнопку
+            document.querySelector('.btn').addEventListener('click', calculateResult);
+        });
+    </script>
+</body>
+</html>
